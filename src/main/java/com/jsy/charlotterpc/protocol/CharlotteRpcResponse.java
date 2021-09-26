@@ -13,14 +13,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LunaRpcRequest {
+public class CharlotteRpcResponse {
 
     String jsonRpc;
 
-    String method;
+    Object result;
 
-    Object[] params;
+    Error error;
 
     String id;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Error {
+
+        int code;
+
+        String message;
+
+        String data;
+    }
 
 }

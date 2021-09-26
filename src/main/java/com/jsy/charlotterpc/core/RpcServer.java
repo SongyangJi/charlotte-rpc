@@ -1,6 +1,6 @@
 package com.jsy.charlotterpc.core;
 
-import com.jsy.charlotterpc.protocol.LunaRpcRequest;
+import com.jsy.charlotterpc.protocol.CharlotteRpcRequest;
 
 /**
  * @author: SongyangJi
@@ -8,5 +8,5 @@ import com.jsy.charlotterpc.protocol.LunaRpcRequest;
  * @since: 2021/9/25
  */
 public interface RpcServer {
-    void process(LunaRpcRequest lunaRpcRequest);
+    void process(CharlotteRpcRequest charlotteRpcRequest);
 }

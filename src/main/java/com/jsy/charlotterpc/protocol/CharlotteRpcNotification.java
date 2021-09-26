@@ -6,5 +6,5 @@ package com.jsy.charlotterpc.protocol;
  * @since: 2021/9/25
  */
 
-public class LunaRpcNotification {
+public class CharlotteRpcNotification {
 }

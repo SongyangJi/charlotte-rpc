@@ -1,6 +1,6 @@
 package com.jsy.charlotterpc.register;
 
-import com.jsy.charlotterpc.annotation.LunaService;
+import com.jsy.charlotterpc.annotation.CharlotteService;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -30,7 +30,7 @@ public class LocalRegisterHandler implements BeanPostProcessor {
 
         Class<?> beanClass = bean.getClass();
 
-        if (beanClass.isAnnotationPresent(LunaService.class)) {
+        if (beanClass.isAnnotationPresent(CharlotteService.class)) {
 
 
             System.out.println("rpc service : " + bean);

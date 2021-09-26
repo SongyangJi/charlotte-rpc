@@ -1,6 +1,6 @@
 package com.jsy.charlotterpc.test;
 
-import com.jsy.charlotterpc.annotation.LunaService;
+import com.jsy.charlotterpc.annotation.CharlotteService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 
 
 @Component
-@LunaService
+@CharlotteService
 public class TestLunaService implements InterfaceA, InterfaceB {
 
     @Override
