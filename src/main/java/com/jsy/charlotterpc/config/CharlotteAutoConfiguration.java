@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @since: 2021/9/25
  */
 
-@Configuration
+
 public class CharlotteAutoConfiguration {
 
     @Bean
