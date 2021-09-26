@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
-public class LunaAutoConfiguration {
+public class CharlotteAutoConfiguration {
 
     @Bean
     public LocalRegistry localRegistry() {
