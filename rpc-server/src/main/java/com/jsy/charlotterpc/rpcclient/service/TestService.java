@@ -2,7 +2,9 @@ package com.jsy.charlotterpc.rpcclient.service;
 
 import com.jsy.charlotterpc.annotation.CharlotteService;
 import com.jsy.charlotterpc.register.LocalRegistry;
+import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -34,6 +36,12 @@ public class TestService implements TestInterfaceA, TestInterfaceB {
     public void test2() {
         System.out.println("TestService test2");
     }
+
+//    @Bean
+//    public ConnectionFactory connectionFactory() {
+//        System.out.println("to client create connectionFactory");
+//        return new ConnectionFactory();
+//    }
 
     @PostConstruct
     public void init() {
