@@ -1,4 +1,4 @@
-package com.jsy.charlotterpc.register;
+package com.jsy.charlotterpc.domain;
 
 import lombok.*;
 
@@ -15,12 +15,27 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class MetaFunction {
+
+    String fullyQualifiedName;
+
     Method method;
     Object handler;
     Class<?> handlerClass;
     Class<?> interfaceClass;
+
+    public MetaFunction(Method method, Object handler, Class<?> handlerClass, Class<?> interfaceClass) {
+        this.method = method;
+        this.handler = handler;
+        this.handlerClass = handlerClass;
+        this.interfaceClass = interfaceClass;
+
+        this.fullyQualifiedName = generateFullyQualifiedName();
+    }
+
+    private String generateFullyQualifiedName() {
+        return interfaceClass.getName() + "." + method.getName();
+    }
 
 
     @Override

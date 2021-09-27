@@ -1,0 +1,4 @@
+charlotte:
+  rabbitmq:
+    host: localhost
+    port: 5679

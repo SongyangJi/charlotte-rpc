@@ -1,4 +1,4 @@
-package com.jsy.charlotterpc.register.mq;
+package com.jsy.charlotterpc.register.mq.rabbit;
 
 /**
  * @author: SongyangJi

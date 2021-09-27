@@ -5,12 +5,13 @@ import com.jsy.charlotterpc.register.LocalRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author: SongyangJi
  * @description:
  * @since: 2021/9/25
  */
-
 
 public class CharlotteAutoConfiguration {
 
@@ -21,7 +22,8 @@ public class CharlotteAutoConfiguration {
 
     @Bean
     public LocalRegisterHandler localRegisterHandler() {
-        return new LocalRegisterHandler(localRegistry());
+        return new LocalRegisterHandler();
     }
+
 
 }

@@ -1,6 +1,11 @@
 package com.jsy.charlotterpc.config;
 
+import com.jsy.charlotterpc.config.mq.RabbitMQAutoConfiguration;
+import com.jsy.charlotterpc.config.mq.RabbitMQProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
  * @author: SongyangJi
@@ -8,6 +13,9 @@ import org.springframework.context.annotation.Import;
  * @since: 2021/9/27
  */
 
-@Import(CharlotteAutoConfiguration.class)
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import({CharlotteAutoConfiguration.class, RabbitMQAutoConfiguration.class})
 public @interface EnableCharlotte {
 }
