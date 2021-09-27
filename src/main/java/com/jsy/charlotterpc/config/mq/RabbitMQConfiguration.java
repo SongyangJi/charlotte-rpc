@@ -18,6 +18,7 @@ public class RabbitMQConfiguration {
 
     RabbitMQProperties rabbitMQProperties;
 
+    @Autowired
     public RabbitMQConfiguration(RabbitMQProperties rabbitMQProperties) {
         this.rabbitMQProperties = rabbitMQProperties;
     }

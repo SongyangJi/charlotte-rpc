@@ -20,12 +20,8 @@ import javax.annotation.PostConstruct;
 @Import(RabbitMQConfiguration.class)
 public class RabbitMQAutoConfiguration {
 
-    RabbitMQProperties rabbitMQProperties;
 
-    @Autowired
-    public RabbitMQAutoConfiguration(RabbitMQProperties rabbitMQProperties) {
-        this.rabbitMQProperties = rabbitMQProperties;
-    }
+
 
 //    @PostConstruct
 //    public void init() {
