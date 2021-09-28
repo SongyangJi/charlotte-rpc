@@ -1,9 +1,13 @@
 package com.jsy.charlotterpc.core.mq.rabbit;
 
+import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author: SongyangJi
@@ -23,6 +27,8 @@ public abstract class RabbitConnectionFactory implements ApplicationContextAware
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
+
+    public abstract Connection createConnection() throws IOException, TimeoutException;
 
 
 }

@@ -17,10 +17,11 @@ import java.lang.reflect.Method;
 
 public class LocalRegisterHandler implements BeanPostProcessor {
 
-
-    @Autowired
     LocalRegistry localRegistry;
 
+    public LocalRegisterHandler(LocalRegistry localRegistry) {
+        this.localRegistry = localRegistry;
+    }
 
     @SneakyThrows
     @Override
@@ -37,9 +38,6 @@ public class LocalRegisterHandler implements BeanPostProcessor {
             Class<?>[] interfaces = beanClass.getInterfaces();
 
             for (Class<?> interfaceClass : interfaces) {
-                // TODO 向注册中心注册
-
-                // TODO 在本地注册
 
 //                System.out.println("  -  interfaceClass : " + interfaceClass);
 //                System.out.println("  -  interfaceClass name : " + interfaceClass.getName());
@@ -50,7 +48,7 @@ public class LocalRegisterHandler implements BeanPostProcessor {
                 for (Method method : declaredMethods) {
 //                    String metaFunctionKey = interfaceClass.getName() + "." + method.getName();
 //                    System.out.println("key: " + metaFunctionKey);
-                    MetaFunction metaFunction = new MetaFunction(method, bean, beanClass, interfaceClass);
+                    MetaFunction metaFunction = new MetaFunction(method, bean);
                     System.out.println(metaFunction);
 //                    method.invoke(bean);
                     localRegistry.register(metaFunction);

@@ -9,22 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpc-server</artifactId>
+    <artifactId>api</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.jsy</groupId>
-            <artifactId>charlotte-rpc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.jsy</groupId>
-            <artifactId>api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

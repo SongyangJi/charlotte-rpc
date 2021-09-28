@@ -1,0 +1,6 @@
+server:
+  port: 8899
+charlotte:
+  rabbitmq:
+    host: localhost
+    port: 5672

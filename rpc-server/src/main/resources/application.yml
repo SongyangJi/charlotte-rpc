@@ -1,4 +1,5 @@
 charlotte:
+  server: true
   rabbitmq:
     host: localhost
-    port: 5679
+    port: 5672

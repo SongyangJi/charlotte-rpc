@@ -2,8 +2,12 @@ package com.jsy.charlotterpc.config.mq;
 
 import com.jsy.charlotterpc.core.mq.rabbit.PooledChannelConnectionFactory;
 import com.jsy.charlotterpc.core.mq.rabbit.RabbitConnectionFactory;
+import com.jsy.charlotterpc.register.LocalRegistry;
+import com.jsy.charlotterpc.register.mq.rabbit.RabbitMQRegisterHandler;
 import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,44 +27,8 @@ import javax.annotation.Resource;
 
 @Configuration
 @ConditionalOnProperty(prefix = "charlotte.rabbitmq", name = {"host", "port"})
-@EnableConfigurationProperties(RabbitMQProperties.class)
+@Import(RabbitMQConfiguration.class)
 public class RabbitMQAutoConfiguration {
-
-    RabbitMQProperties rabbitMQProperties;
-
-    @Autowired
-    public RabbitMQAutoConfiguration(RabbitMQProperties rabbitMQProperties) {
-        this.rabbitMQProperties = rabbitMQProperties;
-    }
-
-    @Bean
-    public RabbitMQConfiguration rabbitMQConfiguration() {
-        return new RabbitMQConfiguration(rabbitMQProperties);
-    }
-
-    @ConditionalOnMissingBean
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        System.out.println("to create connectionFactory");
-
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(rabbitMQProperties.getHost());
-        connectionFactory.setPort(rabbitMQProperties.getPort());
-        connectionFactory.setUsername(rabbitMQProperties.getUsername());
-        connectionFactory.setPassword(rabbitMQProperties.getPassword());
-        return connectionFactory;
-    }
-
-    @Bean
-    public RabbitConnectionFactory rabbitConnectionFactory() {
-        return new PooledChannelConnectionFactory(connectionFactory());
-    }
-
-
-//    @PostConstruct
-//    public void init() {
-//        System.out.println("RabbitMQAutoConfiguration create");
-//    }
 
 }
 

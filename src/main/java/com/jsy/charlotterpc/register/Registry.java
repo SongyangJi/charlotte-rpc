@@ -18,6 +18,6 @@ public interface Registry {
 
     List<String> getAllInterfaceNames();
 
-    List<String> getAllFunctionNames();
+//    List<String> getAllFunctionNames();
 
 }

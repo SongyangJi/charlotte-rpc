@@ -1,10 +1,9 @@
 package com.jsy.charlotterpc.rpcclient.service;
 
 import com.jsy.charlotterpc.annotation.CharlotteService;
+import com.jsy.charlotterpc.api.TestInterfaceA;
 import com.jsy.charlotterpc.register.LocalRegistry;
-import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,8 +16,7 @@ import javax.annotation.PostConstruct;
 
 @CharlotteService
 @Component
-public class TestService implements TestInterfaceA, TestInterfaceB {
-
+public class TestService implements TestInterfaceA {
 
     public LocalRegistry localRegistry;
 
@@ -33,15 +31,15 @@ public class TestService implements TestInterfaceA, TestInterfaceB {
     }
 
     @Override
-    public void test2() {
-        System.out.println("TestService test2");
+    public String test2() {
+        return "hello world";
     }
 
-//    @Bean
-//    public ConnectionFactory connectionFactory() {
-//        System.out.println("to client create connectionFactory");
-//        return new ConnectionFactory();
-//    }
+    @Override
+    public int add(int x, int y) {
+        return x + y;
+    }
+
 
     @PostConstruct
     public void init() {

@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CharlotteRpcRequest {
 
-    String jsonRpc;
+//    String jsonRpcVersion;
 
-    String method;
+    String methodId;
 
     Object[] params;
 
-    String id;
+//    String id;
 
 }

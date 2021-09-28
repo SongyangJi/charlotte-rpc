@@ -15,13 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CharlotteRpcResponse {
 
-    String jsonRpc;
+//    String jsonRpcVersion;
 
     Object result;
 
+    Exception exception;
+
     Error error;
 
-    String id;
+//    String id;
+
 
     @Data
     @NoArgsConstructor
@@ -33,6 +36,7 @@ public class CharlotteRpcResponse {
         String message;
 
         String data;
+
     }
 
 }

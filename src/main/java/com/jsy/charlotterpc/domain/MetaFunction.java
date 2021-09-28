@@ -17,20 +17,34 @@ import java.util.Objects;
 @NoArgsConstructor
 public class MetaFunction {
 
+
+
+    String functionId;
+
+    /**
+     * 完全限定名
+     */
     String fullyQualifiedName;
 
     Method method;
+
     Object handler;
+
     Class<?> handlerClass;
+
     Class<?> interfaceClass;
 
-    public MetaFunction(Method method, Object handler, Class<?> handlerClass, Class<?> interfaceClass) {
+    public MetaFunction(Method method, Object handler) {
         this.method = method;
         this.handler = handler;
-        this.handlerClass = handlerClass;
-        this.interfaceClass = interfaceClass;
-
+        this.handlerClass = handler.getClass();
+        this.interfaceClass = method.getDeclaringClass();
+        this.functionId = generateFunctionId();
         this.fullyQualifiedName = generateFullyQualifiedName();
+    }
+
+    private String generateFunctionId() {
+        return method.toString();
     }
 
     private String generateFullyQualifiedName() {

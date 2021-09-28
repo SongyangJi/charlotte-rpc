@@ -1,4 +1,4 @@
-package com.jsy.charlotterpc.rpcclient.service;
+package com.jsy.charlotterpc.api;
 
 /**
  * @author: SongyangJi
@@ -7,5 +7,9 @@ package com.jsy.charlotterpc.rpcclient.service;
  */
 public interface TestInterfaceA {
     void test1();
-    void test2();
+
+    String test2();
+
+    int add(int x, int y);
+
 }

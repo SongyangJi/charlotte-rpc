@@ -1,4 +1,4 @@
-package com.jsy.charlotterpc.rpcclient.service;
+package com.jsy.charlotterpc.api;
 
 /**
  * @author: SongyangJi

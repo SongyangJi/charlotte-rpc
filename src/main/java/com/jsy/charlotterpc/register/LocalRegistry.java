@@ -4,6 +4,7 @@ import com.jsy.charlotterpc.domain.MetaFunction;
 import com.jsy.charlotterpc.domain.MetaInterface;
 import com.jsy.charlotterpc.exception.MetaFunctionNotFoundException;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
@@ -18,12 +19,11 @@ import java.util.stream.Collectors;
  * @since: 2021/9/25
  */
 
+
 public class LocalRegistry implements Registry {
 
 
     protected final Map<String, MetaFunction> registry = new ConcurrentHashMap<>();
-
-//    protected final Map<String, List<MetaFunction>> interfaceIdMapFunctions = new ConcurrentHashMap<>();
 
     protected Set<MetaInterface> metaInterfaces = new HashSet<>();
 
@@ -52,16 +52,17 @@ public class LocalRegistry implements Registry {
 
     @Override
     public void register(MetaFunction function) {
-        this.register(function.getFullyQualifiedName(), function);
+        this.register(function.getFunctionId(), function);
         MetaInterface metaInterface = new MetaInterface(function.getInterfaceClass());
         metaInterfaces.add(metaInterface);
     }
 
 
-    @Override
-    public List<String> getAllFunctionNames() {
-        return registry.values().stream().map(MetaFunction::getFullyQualifiedName).collect(Collectors.toList());
-    }
+
+//    @Override
+//    public List<String> getAllFunctionNames() {
+//        return registry.values().stream().map(MetaFunction::getFullyQualifiedName).collect(Collectors.toList());
+//    }
 
     @Override
     public List<String> getAllInterfaceNames() {
@@ -77,9 +78,9 @@ public class LocalRegistry implements Registry {
         registry.forEach((s, metaFunction) -> System.out.println(s + ":" + metaFunction));
     }
 
-//    @PostConstruct
-//    public void init() {
-//        System.out.println("LocalRegistry bean create successfully...");
-//    }
+    @PostConstruct
+    public void init() {
+        System.out.println("LocalRegistry bean create successfully...");
+    }
 
 }
