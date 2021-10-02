@@ -47,6 +47,10 @@ public class MetaFunction {
         return method.toString();
     }
 
+    public static String getFunctionId(Method method) {
+        return method.toString();
+    }
+
     private String generateFullyQualifiedName() {
         return interfaceClass.getName() + "." + method.getName();
     }

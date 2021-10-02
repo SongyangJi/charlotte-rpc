@@ -24,7 +24,6 @@ public abstract class ReferenceProxy implements BeanPostProcessor {
         Field[] fields = bean.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (field.isAnnotationPresent(CharlotteReference.class)) {
-                System.out.println(field);
                 field.setAccessible(true);
                 Object proxy = Proxy.newProxyInstance(field.getType().getClassLoader(), new Class<?>[]{field.getType()}, provideInvocationHandler());
                 try {

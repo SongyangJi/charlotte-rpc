@@ -24,4 +24,9 @@ public class RpcController {
         rpcCall.test1();
     }
 
+    @GetMapping("rpc2")
+    public String test2() {
+        return rpcCall.test2();
+    }
+
 }

@@ -20,5 +20,9 @@ public class TestRpcCall {
         testInterfaceA.test1();
     }
 
+    public String test2() {
+        return testInterfaceA.test2();
+    }
+
 
 }

@@ -1,15 +1,18 @@
 package com.jsy.charlotterpc.reference.mq.rabbit;
 
 import com.jsy.charlotterpc.core.mq.rabbit.RabbitConnectionFactory;
+import com.jsy.charlotterpc.domain.MetaFunction;
 import com.jsy.charlotterpc.protocol.CharlotteRpcRequest;
+import com.jsy.charlotterpc.protocol.CharlotteRpcResponse;
+import com.jsy.charlotterpc.util.JsonUtil;
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * @author: SongyangJi
@@ -37,16 +40,35 @@ public class RabbitMQProxyInvocationHandler implements InvocationHandler {
         String interfaceName = interfaceClass.getName();
 
         String rpcQueueName = QUEUE_PREFIX + "." + interfaceName;
-        String fullyQualifiedMethodName = interfaceName + "." + method.getName();
-
-        CharlotteRpcRequest rpcRequest = new CharlotteRpcRequest();
-        rpcRequest.setMethod(fullyQualifiedMethodName);
 
         Channel channel = rabbitConnectionFactory.createConnection().createChannel();
 
-        channel.basicPublish("",rpcQueueName,null,"fake rpc request".getBytes(StandardCharsets.UTF_8));
+        CharlotteRpcRequest rpcRequest = new CharlotteRpcRequest();
+        rpcRequest.setMethodId(MetaFunction.getFunctionId(method));
+        rpcRequest.setParams(args);
 
-        return null;
+
+        String replyQueueName = channel.queueDeclare().getQueue();
+        AMQP.BasicProperties props = new AMQP.BasicProperties
+                .Builder()
+                .replyTo(replyQueueName)
+                .build();
+
+        channel.basicPublish("",rpcQueueName,props, JsonUtil.stringfy(rpcRequest).getBytes(StandardCharsets.UTF_8));
+
+        BlockingQueue<String> response = new ArrayBlockingQueue<>(1);
+
+        String cTag = channel.basicConsume(replyQueueName,true, (consumerTag, delivery) -> {
+            response.offer(new String(delivery.getBody(), StandardCharsets.UTF_8));
+        }, consumerTag -> {});
+
+        String rpcResponseStr = response.take();
+        CharlotteRpcResponse rpcResponse = JsonUtil.parse(rpcResponseStr, CharlotteRpcResponse.class);
+//        System.out.println(rpcResponse);
+
+        channel.basicCancel(cTag);
+
+        return rpcResponse.getResult();
     }
 
 //    @PostConstruct

@@ -26,6 +26,10 @@ public class CharlotteRpcResponse {
 //    String id;
 
 
+    public CharlotteRpcResponse(Object result) {
+        this.result = result;
+    }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

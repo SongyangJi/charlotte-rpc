@@ -1,11 +1,19 @@
 package com.jsy.charlotterpc.register.mq.rabbit;
 
 import com.jsy.charlotterpc.core.mq.rabbit.RabbitConnectionFactory;
+import com.jsy.charlotterpc.domain.MetaFunction;
+import com.jsy.charlotterpc.exception.MetaFunctionNotFoundException;
+import com.jsy.charlotterpc.protocol.CharlotteRpcRequest;
+import com.jsy.charlotterpc.protocol.CharlotteRpcResponse;
 import com.jsy.charlotterpc.register.Registry;
 import com.jsy.charlotterpc.register.RemoteRegisterHandler;
+import com.jsy.charlotterpc.util.JsonUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -44,15 +52,37 @@ public class RabbitMQRegisterHandler extends RemoteRegisterHandler {
             String rpcQueueName = QUEUE_PREFIX + "." + interfaceName;
             channel.queueDeclare(rpcQueueName, true, false, false, null);
 
-            channel.basicConsume(rpcQueueName,new DefaultConsumer(channel) {
-                @Override
-                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                    System.out.println(new String(body));
+            DeliverCallback deliverCallback = (consumerTag, message) -> {
+                System.out.println("consumerTag : " + consumerTag);
+                System.out.println("message : " + message);
+                String rpcRequestStr = new String(message.getBody(), StandardCharsets.UTF_8);
+                CharlotteRpcRequest rpcRequest = JsonUtil.parse(rpcRequestStr, CharlotteRpcRequest.class);
+                System.out.println(rpcRequest);
+
+                String methodId = rpcRequest.getMethodId();
+                Object[] params = rpcRequest.getParams();
+                Object result = null;
+                try {
+                    MetaFunction metaFunction = this.localRegistry.access(methodId);
+                    Method method = metaFunction.getMethod();
+                    Object handler = metaFunction.getHandler();
+                    result = method.invoke(handler, params);
+
+                } catch (MetaFunctionNotFoundException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                } finally {
+                    CharlotteRpcResponse rpcResponse = new CharlotteRpcResponse(result);
+
+                    channel.basicPublish("", message.getProperties().getReplyTo(), message.getProperties(),
+                            JsonUtil.stringfy(rpcResponse).getBytes(StandardCharsets.UTF_8));
+                    channel.basicAck(message.getEnvelope().getDeliveryTag(), false);
                 }
+
+            };
+            channel.basicConsume(rpcQueueName, false, deliverCallback, consumerTag -> {
             });
         }
     }
-
 
 
 }

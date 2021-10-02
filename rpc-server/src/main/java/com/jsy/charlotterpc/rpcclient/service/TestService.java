@@ -32,7 +32,7 @@ public class TestService implements TestInterfaceA {
 
     @Override
     public String test2() {
-        return "hello world";
+        return "hello world from charlotte rpc";
     }
 
     @Override

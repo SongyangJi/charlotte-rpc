@@ -10,7 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
  */
 public abstract class RemoteRegisterHandler implements ApplicationListener<ContextRefreshedEvent> {
 
-    Registry localRegistry;
+    protected Registry localRegistry;
 
     public RemoteRegisterHandler(Registry localRegistry) {
         this.localRegistry = localRegistry;
